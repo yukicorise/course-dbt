@@ -33,15 +33,31 @@ models:
 
       - name: session_id
         description: "UUID of each browsing session on the platform which can contain many "
+        tests:
+          - relationships:
+              to: ref('source_postgres__events')
+              field: session_id
 
       - name: user_id
         description: "UUID of the user that this event is associated with"
+        tests:
+          - relationships:
+              to: ref('source_postgres__users')
+              field: user_id
 
       - name: order_id
         description: "If the event is specific to an order (mostly used for checkout)"
+        tests:
+          - relationships:
+              to: ref('source_postgres__orders')
+              field: order_id
 
       - name: product_id
         description: "If the event is specific to a product"
+        tests:
+          - relationships:
+              to: ref('source_postgres__products')
+              field: product_id
 
       - name: created_at
         description: "Timestamp of the event"
@@ -63,9 +79,17 @@ models:
       
       - name: order_id
         description: "OrderId of this order"
+        tests:
+          - relationships:
+              to: ref('source_postgres__orders')
+              field: order_id
 
       - name: product_id
         description: "ProductId of a single item in this order"
+        tests:
+          - relationships:
+              to: ref('source_postgres__products')
+              field: product_id
 
       - name: quantity
         description: "Number of units of the product in this order"
@@ -81,12 +105,24 @@ models:
 
       - name: user_id
         description: "UserId of the user that placed this order"
+        tests:
+          - relationships:
+              to: ref('source_postgres__users')
+              field: user_id
 
       - name: address_id
         description: "Delivery address for this order"
+        tests:
+          - relationships:
+              to: ref('source_postgres__addresses')
+              field: address_id
 
       - name: promo_id
         description: "PromoId if any was used in the order"
+        tests:
+          - relationships:
+              to: ref('source_postgres__promos')
+              field: promo_id
 
       - name: tracking_id
         description: "Tracking number for the order/package"
@@ -112,8 +148,11 @@ models:
       - name: shipping_service
         description: "Company that was used for shipping"
 
-      - name: status
+      - name: order_status
         description: "Status of the order"
+        tests:
+          - accepted_values:
+              values: [delivered, preparing, shipped]
   
   - name: source_postgres__products
     description: "Product info for Greenery products"
@@ -147,6 +186,9 @@ models:
 
       - name: status
         description: "Is the promo code active or disabled"
+        tests:
+          - accepted_values:
+              values: [active, inactive]
   
   - name: source_postgres__users
     description: "User info for users on the platform"
@@ -159,6 +201,10 @@ models:
 
       - name: address_id
         description: "UUID for each unique address on platform"
+        tests:
+          - relationships:
+              to: ref('source_postgres__addresses')
+              field: address_id
 
       - name: created_at
         description: "timestamp the user was created"
@@ -177,5 +223,3 @@ models:
 
       - name: phone_number
         description: "phone number of the user"
-
-# test

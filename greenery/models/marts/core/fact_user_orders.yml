@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: fact_user_orders
+    description: "fact table for user orders"
+    columns:
+      - name: order_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "UUID of the user that this event is associated with"
+        tests:
+          - relationships:
+              to: ref('source_postgres__users')
+              field: user_id
+
+      - name: address_id
+        description: "UUID for each unique address on platform"
+        tests:
+          - relationships:
+              to: ref('source_postgres__addresses')
+              field: address_id
+
+      - name: order_status
+        description: "status of the order"
+
+      - name: address
+        description: "The first few lines of the addres"
+
+      - name: zipcode
+        description: "The zipcode of the address"
+
+      - name: state
+        description: "state this delivery address is based in"
+
+      - name: country
+        description: "country this delivery address is based in"
+
+      - name: distinct_product_count
+        description: "The distinct count of products that are a part of each order"
