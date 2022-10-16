@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: dim_users
+    description: "Dimension table for users"
+    columns:
+      - name: user_id
+        description: "UUID for each unique address on platform"
+        tests:
+          - not_null
+          - unique
+
+      - name: address_id
+        description: "UUID for each unique address on platform"
+        tests:
+          - relationships:
+              to: ref('source_postgres__addresses')
+              field: address_id
+
+      - name: created_at
+        description: "timestamp the user was created"
+
+      - name: updated_at
+        description: "timestamp the user was last updated"
+
+      - name: first_name
+        description: "first name of the user"
+
+      - name: last_name
+        description: "last name of the user"
+
+      - name: email
+        description: "email address of the user"
+
+      - name: phone_number
+        description: "phone number of the user"
+
+      - name: address
+        description: "The first few lines of the address"
+
+      - name: zipcode
+        description: "The zipcode of the address"
+
+      - name: state
+        description: "state this delivery address is based in"
+
+      - name: country
+        description: "country this delivery address is based in"
+
+      - name: distinct_order_count
+        description: "a count of the distinct orders for each user"
