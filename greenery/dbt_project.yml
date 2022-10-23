@@ -35,6 +35,10 @@ models:
   greenery:
     # Config indicated by + and applies to all files under models/example/
     staging:
+      +post-hook:
+        - "grant select on {{ this }} to role reporting"
       +materialized: view
-    marts: 
+    marts:
+      +post-hook:
+        - "grant select on {{ this }} to role reporting"
       +materialized: table

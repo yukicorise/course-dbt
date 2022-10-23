@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fact_sessions
+    description: "Fact table for sessions, aggregated from events"
+    tests:
+      - dbt_expectations.expect_column_pair_values_A_to_be_greater_than_B:
+          column_A: add_to_cart_count
+          column_B: checkout_count
+          or_equal: True
+    columns:
+      - name: session_id
+        description: "UUID of each browsing session on the platform"
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: "UUID of the user that this event is associated with"
+        tests:
+          - relationships:
+              to: ref('source_postgres__users')
+              field: user_id
+
+      - name: first_event_at
+        description: "timestamp of the first event of the session"
+
+      - name: last_event_at
+        description: "timestamp of the last event of the session"
+
+      - name: first_name
+        description: "first name of the user"
+
+      - name: last_name
+        description: "last name of the user"
+
+      - name: email
+        description: "email address of the user"
+
+      - name: phone_number
+        description: "phone number of the user"
+
+      - name: total_event_count
+        description: "the total number of events in the session"
+
+      - name: session_duration_minutes
+        description: "total duration of the session in minutes"
+
+      - name: add_to_cart_count
+        description: "the total number of times the user had an add_to_cart event during the session"
+
+      - name: checkout_count
+        description: "the total number of times the user had a checkout event during the session"
+
+      - name: package_shipped_count
+        description: "the total number of times the user had a package_shipped event during the session"
+
+      - name: page_view_count
+        description: "the total number of times the user had a page_view event during the session"
