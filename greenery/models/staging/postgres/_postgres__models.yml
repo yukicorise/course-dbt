@@ -32,7 +32,7 @@ models:
           - unique
 
       - name: session_id
-        description: "UUID of each browsing session on the platform which can contain many "
+        description: "UUID of each browsing session on the platform"
         tests:
           - relationships:
               to: ref('source_postgres__events')
