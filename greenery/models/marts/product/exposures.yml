@@ -1,0 +1,14 @@
+version: 2
+
+exposures:
+
+  - name: session_funnel_analysis
+    type: dashboard
+    description: data analysts and the product team rely on these models to conduct funnel analysis
+    
+    depends_on: 
+      - ref('fact_sessions')
+    
+    owner:
+      name: Yuki Ito
+      email: yito16@gmail.com
